@@ -16,7 +16,7 @@ namespace ProntuarioMedicoAPI.Controllers
         }
 
 
-        [HttpGet("/{id:int}")]
+        [HttpGet("obter/{id:int}")]
         public async Task<IActionResult> GetById ([FromRoute]int id)
         {
             var paciente = await contexto.Pacientes.FirstOrDefaultAsync(c => c.PacienteId == id);
@@ -27,7 +27,7 @@ namespace ProntuarioMedicoAPI.Controllers
             return Ok(paciente);
         }
 
-        [HttpPost]
+        [HttpPost("cadastrar")]
         public async Task<IActionResult> Post([FromBody] PacienteCadastroDTO pacienteCadastroDTO)
         {
             var paciente = new Paciente
@@ -44,7 +44,7 @@ namespace ProntuarioMedicoAPI.Controllers
             return Created($"/{paciente.PacienteId}", paciente);
         }
 
-        [HttpPut("/{id:int}")]
+        [HttpPut("atualizar/{id:int}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] PacienteEditarDTO pacienteEditarDTO)
         {
             var paciente = await contexto.Pacientes.FirstOrDefaultAsync(paciente => paciente.PacienteId == id);
@@ -62,7 +62,7 @@ namespace ProntuarioMedicoAPI.Controllers
             await contexto.SaveChangesAsync();
             return Ok($"{paciente}");
         }
-        [HttpDelete("/{id:int}")]
+        [HttpDelete("excluir/{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var paciente = await contexto.Pacientes.FirstOrDefaultAsync(paciente => paciente.PacienteId == id);
